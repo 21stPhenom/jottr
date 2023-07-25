@@ -1,0 +1,11 @@
+{% extends 'authentication/base.html' %}
+
+{% block title %}Home | Jottr{% endblock title %}
+
+{% block body %}
+{% if user == '' %}
+    <h3>You are not logged in!</h3>
+{% else %}
+    <h3>Hello, {{user.username}}</h3>
+{% endif %}
+{% endblock body %}

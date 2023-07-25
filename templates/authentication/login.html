@@ -1,0 +1,20 @@
+{% extends 'authentication/base.html' %}
+
+{% block title %}Login | Jottr{% endblock title %}
+
+{% block body %}
+<form action="{% url 'authentication:login' %}" method="post">
+    {% csrf_token %}
+
+    <label for="email_or_username">Email or Username
+        <input type="text" name="email_or_username">
+    </label>
+
+    <label for="password">
+        <input type="password" name="password">
+    </label>
+
+    <input type="submit" value="Login">
+</form>
+
+{% endblock body %}

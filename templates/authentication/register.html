@@ -1,0 +1,27 @@
+{% extends 'authentication/base.html' %}
+
+{% block title %}Register | Jottr{% endblock title %}
+
+{% block body %}
+<form action="{% url 'authentication:register' %}" method="post">
+    {% csrf_token %}
+    <label for="email">
+        <input type="text" name="email">
+    </label>
+
+    <label for="username">Username:
+        <input type="text" name="username">
+    </label>
+
+    <label for="password1">Password:
+        <input type="password" name="password1">
+    </label>
+
+    <label for="password2">Confirm Password:
+        <input type="password" name="password2">
+    </label>
+
+    <input type="submit" value="Register">
+</form>
+
+{% endblock body %}
