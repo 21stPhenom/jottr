@@ -9,5 +9,8 @@ class Note(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     short_title = models.CharField(verbose_name="Note Slug", max_length=12)
 
+    class Meta:
+        order_by = ['-timestamp']
+
     def __str__(self):
         return f"{self.title}"
