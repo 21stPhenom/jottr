@@ -10,7 +10,7 @@ class Note(models.Model):
     short_title = models.CharField(verbose_name="Note Slug", max_length=12)
 
     class Meta:
-        order_by = ['-timestamp']
+        ordering = ['-timestamp']
 
     def __str__(self):
         return f"{self.title}"
