@@ -8,6 +8,7 @@ class Note(models.Model):
     content = models.CharField(verbose_name="Note Content", max_length=10000)
     timestamp = models.DateTimeField(auto_now_add=True)
     short_title = models.CharField(verbose_name="Note Slug", max_length=12)
+    archived = models.BooleanField(verbose_name="Archived?", default=False)
 
     class Meta:
         ordering = ['-timestamp']
