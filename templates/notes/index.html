@@ -1,0 +1,28 @@
+{% extends 'notes/base.html' %}
+
+{% block title %}Home | Jottr{% endblock title %}
+
+{% block body %}
+<!-- Quick links -->
+<ul>
+    <li><a href="{% url 'notes:add_note' %}">Add Note</a></li>
+    <li><a href="{% url 'notes:all_notes' %}">View Notes</a></li>
+</ul>
+
+<!-- Check if user is authenticated -->
+{% if user == None %}
+    <h3>You are not logged in!</h3>
+{% else %}
+    <h3>Hello, {{user.username}}</h3>
+{% endif %}
+
+<h3>Here's a quick overview of your notes:</h3>
+{% for note in notes %}
+    <ul>
+        <li><a href="{% url 'notes:view_note' note.short_title %}">{{note.title}}</a></li>
+    </ul>
+{% empty %}
+    <h4>You have no notes to show.</h4>
+{% endfor %}
+
+{% endblock body %}
