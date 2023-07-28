@@ -6,6 +6,14 @@
 <h3>{{note.title}}</h3>
 <button><a href="{% url 'notes:update_note' note.short_title %}">Edit</a></button>
 <button><a href="{% url 'notes:delete_note' note.short_title %}">Delete</a></button>
+<button><a href="{% url 'notes:archive_note' note.short_title %}">Archive</a></button>
+<i><b>
+    {% if note.archived %}
+    Archived
+    {% else %}
+
+    {% endif %}
+</b></i>
 
 <br>
 <p>{{note.content}}</p>
