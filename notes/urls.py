@@ -10,6 +10,7 @@ urlpatterns = [
     path('add-note/', views.add_note, name='add_note'),
     path('<str:short_title>/', views.view_note, name='view_note'),
     path('<str:short_title>/update/', views.update_note, name='update_note'),
-    path('<str:short_title>/delete/', views.delete_note, name='delete_note')
+    path('<str:short_title>/delete/', views.delete_note, name='delete_note'),
+    path('<str:short_title>/archive/', views.archive_note, name='archive_note'),
+    path('notes/archives/', views.all_archives, name='all_archives')
 ]
-handler_404 = notes.views.not_found
