@@ -11,7 +11,7 @@ def hash_title(string: str) -> str:
     pk = str(string).encode()
 
     hashed_title = hashlib.sha256(pk)
-    return hashed_title.hexdigest()[0:13]
+    return hashed_title.hexdigest()[0:12]
 
 @method_decorator(login_required(login_url='authentication:login'), name='dispatch')
 # Create your views here.
@@ -31,7 +31,7 @@ class NotesView(View):
     template_name = 'notes/all_notes.html'
 
     def get(self, request, *args, **kwargs) -> HttpResponse:
-        notes = self.manager.filter(author=request.user)
+        notes = self.manager.filter(author=request.user, archived=False)
         context = {
             'notes': notes
         }
@@ -113,6 +113,33 @@ class NotFoundView(View):
     def get(self, request, *args, **kwargs):
         return render(request, 'notes/error.html', {})
     
+@method_decorator(login_required(login_url='authentication:login'), name='dispatch')
+class ArchiveNote(View):
+    manager = Note.objects
+
+    def get(self, request, short_title, *args, **kwargs) -> HttpResponse:
+        note = get_object_or_404(self.manager, author=request.user, short_title=short_title)
+        # Toggle 'archived' status on a note
+        if note.archived == False:
+            note.archived = True
+            note.save(update_fields=['archived'])
+        else:
+            note.archived = False
+            note.save(update_fields=['archived'])
+
+        return redirect(request.META.get('HTTP_REFERER'))
+
+@method_decorator(login_required(login_url='authentication:login'), name='dispatch')
+class NoteArchives(View):
+    manager = Note.objects
+    template_name = 'notes/archives.html'
+
+    def get(self, request, *args, **kwargs) -> HttpResponse:
+        notes = self.manager.filter(author=request.user, archived=True)
+        context = {
+            'notes': notes
+        }
+        return render(request, self.template_name, context=context)
 
 not_found = NotFoundView.as_view()
 index = IndexView.as_view()
@@ -121,3 +148,5 @@ add_note = AddNote.as_view()
 view_note = ViewNote.as_view()
 update_note = UpdateNote.as_view()
 delete_note = DeleteNote.as_view()
+archive_note = ArchiveNote.as_view()
+all_archives = NoteArchives.as_view()
