@@ -1,0 +1,24 @@
+{% extends 'notes/base.html' %}
+
+{% block title %}My Archives| Jottr{% endblock title %}
+
+{% block body %}
+<ul>
+    <li><a href="{% url 'notes:index' %}">Home</a></li>
+    <li><a href="{% url 'notes:add_note' %}">Add Note</a></li>
+    <li><a href="{% url 'notes:all_notes' %}">View Notes</a></li>
+    <li><a href="{% url 'authentication:logout_view' %}">Logout</a></li>
+    
+</ul>
+
+<!-- Notes Section -->
+{% for note in notes %}
+    <ul>
+        <li><a href="{% url 'notes:view_note' note.short_title%}">{{note.title}}</a></li>
+    </ul>
+{% empty %}
+    <h3>You have no notes. <a href="{% url 'notes:add_note' %}">Click here</a> to add a note</h3>
+{% endfor %}
+
+
+{% endblock body %}

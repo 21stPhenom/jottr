@@ -51,11 +51,16 @@ class RegisterView(View):
         return redirect(self.success_url)
 
 class LoginView(View):
+    referer = []
     template_name = 'authentication/login.html'
-    success_url = 'authentication:home'
+    success_url = 'notes:index'
 
     def get(self, request, *args, **kwargs) -> HttpResponse:
         context = {}
+        if request.GET != {}: 
+            self.referer.append(request.GET['next'])
+        else:
+            pass
         return render(request, self.template_name, context)
     
     def post(self, request, *args, **kwargs) -> HttpResponse:
@@ -71,7 +76,10 @@ class LoginView(View):
         login(request, user)
         print("Logged in")
 
-        return redirect(self.success_url)
+        if len(self.referer) == 0:
+            return redirect(self.success_url)
+        else:
+            return redirect(self.referer[0])
 
 class LogoutView(View):
     def get(self, request, *args, **kwargs) -> HttpResponse:

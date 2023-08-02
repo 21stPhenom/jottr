@@ -1,0 +1,21 @@
+{% extends 'notes/base.html' %}
+
+{% block title %}Edit Note | Jottr{% endblock title %}
+
+{% block body %}
+<form action="{% url 'notes:update_note' note.short_title %}" method="post">
+    {% csrf_token %}
+
+    <label for="title">
+        <input type="text" name="title" value={{note.title}}>
+    </label>
+
+    <label for="content">
+        <input type="text" name="content" value={{note.content}}>
+    </label>
+
+    <input type="submit" value="Update Note">
+
+</form>
+
+{% endblock body %}
