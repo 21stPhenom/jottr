@@ -1,0 +1,12 @@
+databases:
+  - name: jottr
+    databaseName: jottr_4jug
+    user: thephenom
+
+service:
+  - name: jottr
+  - type: web
+  - runtime: python
+  - buildCommand: './build.sh'
+  - startCommand: "gunicorn jottr.wsgi:application"
+  
