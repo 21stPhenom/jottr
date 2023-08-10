@@ -69,8 +69,8 @@ class ViewNote(View):
     manager = Note.objects
     template_name = 'notes/view_note.html'
 
-    def get(self, request, short_title, *args, **kwargs) -> HttpResponse:
-        note = get_object_or_404(self.manager, author=request.user, short_title=short_title)
+    def get(self, request, pk, *args, **kwargs) -> HttpResponse:
+        note = get_object_or_404(self.manager, author=request.user, pk=pk)
         context = {
             'note': note
         }
@@ -81,18 +81,18 @@ class UpdateNote(View):
     manager = Note.objects
     template_name = 'notes/update_note.html'
 
-    def get(self, request, short_title, *args, **kwargs) -> HttpResponse:
-        note = get_object_or_404(self.manager, author=request.user, short_title=short_title)
+    def get(self, request, pk, *args, **kwargs) -> HttpResponse:
+        note = get_object_or_404(self.manager, author=request.user, pk=pk)
         context = {
             'note': note
         }
         return render(request, self.template_name, context=context)
     
-    def post(self, request, short_title, *args, **kwargs) -> HttpResponse:
+    def post(self, request, pk, *args, **kwargs) -> HttpResponse:
         note_title = request.POST['note_title']
         note_content = request.POST['note_content']
 
-        note = get_object_or_404(self.manager, author=request.user, short_title=short_title)
+        note = get_object_or_404(self.manager, author=request.user, pk=pk)
         note.title = note_title
         note.content = note_content
 
@@ -103,8 +103,8 @@ class UpdateNote(View):
 class DeleteNote(View):
     manager = Note.objects
 
-    def get(self, request, short_title, *args, **kwargs) -> HttpResponse:
-        note = get_object_or_404(self.manager, author=request.user, short_title=short_title)
+    def get(self, request, pk, *args, **kwargs) -> HttpResponse:
+        note = get_object_or_404(self.manager, author=request.user, pk=pk)
         note.delete()
         return redirect('notes:all_notes')
 
@@ -117,8 +117,8 @@ class NotFoundView(View):
 class ArchiveNote(View):
     manager = Note.objects
 
-    def get(self, request, short_title, *args, **kwargs) -> HttpResponse:
-        note = get_object_or_404(self.manager, author=request.user, short_title=short_title)
+    def get(self, request, pk, *args, **kwargs) -> HttpResponse:
+        note = get_object_or_404(self.manager, author=request.user, pk=pk)
         # Toggle 'archived' status on a note
         if note.archived == False:
             note.archived = True
