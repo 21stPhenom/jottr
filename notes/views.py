@@ -89,8 +89,8 @@ class UpdateNote(View):
         return render(request, self.template_name, context=context)
     
     def post(self, request, pk, *args, **kwargs) -> HttpResponse:
-        note_title = request.POST['note_title']
-        note_content = request.POST['note_content']
+        note_title = request.POST['title']
+        note_content = request.POST['content']
 
         note = get_object_or_404(self.manager, author=request.user, pk=pk)
         note.title = note_title
