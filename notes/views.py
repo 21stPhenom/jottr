@@ -97,7 +97,7 @@ class UpdateNote(View):
         note.content = note_content
 
         note.save(update_fields=['title', 'content'])
-        return redirect('notes:view_note')
+        return redirect('notes:view_note', note.pk)
     
 @method_decorator(login_required(login_url='authentication:login'), name='dispatch')
 class DeleteNote(View):
