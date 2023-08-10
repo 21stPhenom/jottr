@@ -13,7 +13,7 @@
 <!-- Notes Section -->
 {% for note in notes %}
     <ul>
-        <li><a href="{% url 'notes:view_note' note.short_title%}">{{note.title}}</a></li>
+        <li><a href="{% url 'notes:view_note' note.pk%}">{{note.title}}</a></li>
     </ul>
 {% empty %}
     <h3>You have no notes. <a href="{% url 'notes:add_note' %}">Click here</a> to add a note</h3>
