@@ -68,7 +68,7 @@ class LoginView(View):
         password = request.POST['password']
 
         if User.objects.filter(username=email_or_username).exists():
-            user = get_object_or_404(username=email_or_username)
+            user = get_object_or_404(User, username=email_or_username)
 
         elif User.objects.filter(email=email_or_username).exists():
             user = get_object_or_404(User, email=email_or_username)
