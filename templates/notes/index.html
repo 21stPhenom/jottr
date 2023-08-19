@@ -20,7 +20,7 @@
 <h3>Here's a quick overview of your notes:</h3>
 {% for note in notes %}
     <ul>
-        <li><a href="{% url 'notes:view_note' note.short_title %}">{{note.title}}</a></li>
+        <li><a href="{% url 'notes:view_note' note.pk %}">{{note.title}}</a></li>
     </ul>
 {% empty %}
     <h4>You have no notes to show.</h4>
