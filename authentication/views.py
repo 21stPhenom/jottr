@@ -1,7 +1,7 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
 from django.http import HttpResponse
 
@@ -68,12 +68,13 @@ class LoginView(View):
         password = request.POST['password']
 
         if User.objects.filter(username=email_or_username).exists():
-            user = User.objects.get(username=email_or_username)
+            user = get_object_or_404(User, username=email_or_username)
+
         elif User.objects.filter(email=email_or_username).exists():
-            user = User.objects.get(email=email_or_username)
+            user = get_object_or_404(User, email=email_or_username)
         
         user_object = authenticate(username=user.username, password=password)
-        login(request, user)
+        login(request, user_object)
         print("Logged in")
 
         if len(self.referer) == 0:

@@ -3,7 +3,7 @@
 {% block title %}Edit Note | Jottr{% endblock title %}
 
 {% block body %}
-<form action="{% url 'notes:update_note' note.short_title %}" method="post">
+<form action="{% url 'notes:update_note' note.pk %}" method="post">
     {% csrf_token %}
 
     <label for="title">
